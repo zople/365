@@ -11,10 +11,8 @@ root {
 }
 #top {
     position: relative;
-    background-color: #ff8201;
+    background-color: #007dcd;
     color: white;
-    padding: 1px;
-    margin: 0px 0px 2px 0px;
 }
 body{
    color: #333;
