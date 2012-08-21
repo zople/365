@@ -5,11 +5,12 @@
 package com.zople.domain;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,10 +34,18 @@ public class Company implements Serializable {
     private Long id;
     @Size(max = 255)
     @Column(name = "description")
+    @Basic(fetch= FetchType.EAGER)
     private String description;
-    @Lob
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
+    }
     @Column(name = "image")
-    private byte[] image;
+    private Blob image;
     @Size(max = 255)
     @Column(name = "name")
     private String name;
@@ -62,14 +71,6 @@ public class Company implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 
     public String getName() {
@@ -103,6 +104,5 @@ public class Company implements Serializable {
     @Override
     public String toString() {
         return "com.zople.domain.Company[ id=" + id + " ]";
-    }
-    
+    }    
 }

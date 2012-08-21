@@ -39,6 +39,7 @@
             <definitions>./lib/nblibraries.properties</definitions>
         </libraries>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>用户登录</word>
             <word>首页</word>
         </spellchecker-wordlist>
     </configuration>

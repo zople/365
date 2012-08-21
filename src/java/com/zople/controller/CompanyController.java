@@ -1,15 +1,20 @@
 package com.zople.controller;
 
-import com.zople.domain.Company;
 import com.zople.controller.util.JsfUtil;
 import com.zople.controller.util.PaginationHelper;
 import com.zople.dao.CompanyFacade;
+import com.zople.domain.Company;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-
 import java.io.Serializable;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -18,7 +23,10 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpSession;
+import javax.inject.Named;
+import javax.sql.rowset.serial.SerialBlob;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 @Named("companyController")
@@ -32,6 +40,7 @@ public class CompanyController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private UploadedFile file;
+    private StreamedContent myImage;
     public CompanyController() {
     }
 
@@ -41,6 +50,14 @@ public class CompanyController implements Serializable {
             selectedItemIndex = -1;
         }
         return current;
+    }
+
+    public StreamedContent getMyImage() {
+        return myImage;
+    }
+
+    public void setMyImage(StreamedContent myImage) {
+        this.myImage = myImage;
     }
 
     private CompanyFacade getFacade() {
@@ -70,9 +87,19 @@ public class CompanyController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Company) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        InputStream inputStream;
+        try {
+            current = (Company) getItems().getRowData();
+            inputStream=new ByteArrayInputStream(ejbFacade.findImg(current.getId()));
+            myImage = new DefaultStreamedContent(inputStream, "image/png");
+            selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+            return "View";
+        } catch (Exception ex) {
+            Logger.getLogger(CompanyController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+ 
+        }
+        return null;
     }
 
     public String prepareCreate() {
@@ -88,14 +115,14 @@ public class CompanyController implements Serializable {
                 byte[] b=new byte[is.available()];
                 is.read(b);
                 is.close();
-                current.setImage(b);
+                Blob	bb = new SerialBlob(b);
+                current.setImage(bb);
             }
             getFacade().create(current);
             
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            e.printStackTrace();
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
