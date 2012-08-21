@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <f:view>
         <h:head>
             <h:outputStylesheet library="default" name="css/reset.css"/>
@@ -17,23 +18,23 @@
         </h:head>
 
         <body>
-            <div id="top">
+            <div id="header">
                   <ui:insert name="top">
-                       <ui:include src="/pages/common/header.html"/>
+                       <ui:include src="/pages/common/adminEnterprise/header.xhtml"/>
                   </ui:insert>
             </div>
             <div>
                 <div id="left">
-                    <!--
-                    <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-                   
-                    <br />
-                    <h:link outcome="/pages/bid/List" value="Show All Bid Items"/>
-                    <br />
-                    <h:link outcome="/pages/item/List" value="Show All Item Items"/>
-                    <br />
-                    <h:link outcome="/pages/person/List" value="Show All Person Items"/>
-                     --> 
+                     <ui:insert name="left">
+                      <p:menu>
+                        <p:submenu label="首页">
+<!--                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />-->
+                        </p:submenu>
+                    </p:menu>
+                    </ui:insert>
                 </div>
 
                 <div id="content" class="left_content">
@@ -42,7 +43,7 @@
             </div>
             <div id="bottom">
                  <ui:insert name="bottom">
-                      <ui:include src="/pages/common/footer.html"/>
+                      <ui:include src="/pages/common/adminEnterprise/footer.html"/>
                  </ui:insert>
                
             </div>

@@ -6,6 +6,10 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:composition template="/pages/templates/index.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewProductsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
@@ -40,6 +44,7 @@
                 <h:link outcome="/index" value="#{bundle.ViewProductsIndexLink}"/>
 
             </h:form>
+        </ui:define>
     </ui:composition>
 
 </html>

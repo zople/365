@@ -16,13 +16,14 @@
     position: relative;
     background-color: #dddddd;
     padding: 5px;
+    height: 400px;
 }
 
 .left_content {
     background-color: #dddddd;
     padding: 5px;
     margin-left: 170px;
-    height: 500px;
+    height: 310px;
 }
 
 .right_content {

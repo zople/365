@@ -11,6 +11,11 @@ root {
 }
 #top {
     position: relative;
+    background-color: #ff8201;
+    color: white;
+}
+#header{
+    position: relative;
     background-color: #007dcd;
     color: white;
 }

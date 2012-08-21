@@ -5,33 +5,15 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html">
-
     <h:head/>
     <h:body>
-        <!--
-       <ui:composition template="pages/templates/Main.xhtml">
-            <ui:define name="content">
-                aaaaaaa
-            </ui:define>
-            
-        </ui:composition>
-        -->
-        <!--      <h:outputLink value="../index.jsp">
-                <h:outputText value="企业用户平台后台管理"/>
-                <f:param name="name" value="MyName"/>
-          </h:outputLink>
-        -->
-        <!--        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" /><br/>
-                <h:commandButton value="企业用户平台后台管理" action="#{user.verify}"/><br/>-->
+        <h:link title="365" outcome="/pages/index/main" value="365网站"></h:link>
+        <br/><br/>
         <h:link title="企业用户平台后台管理" outcome="/pages/adminEnterprise/main" value="企业用户平台后台管理"></h:link>
-        <!--       <h:form>嵌套from表单使用
-                  <h:commandLink   value="#{template.enterpriseUsersBackground}"   action="#{user.verify}"/>   
-               </h:form>
-        -->
-
-        <br />
-        <h:link outcome="/pages/products/List" value="Show All Products Items"/>
     </h:body>
+
+
+
 
 
 

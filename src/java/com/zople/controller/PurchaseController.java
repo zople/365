@@ -1,9 +1,9 @@
 package com.zople.controller;
 
-import com.zople.domain.Person;
+import com.zople.domain.Purchase;
 import com.zople.controller.util.JsfUtil;
 import com.zople.controller.util.PaginationHelper;
-import com.zople.dao.PersonFacade;
+import com.zople.dao.PurchaseFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,35 +18,36 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("personController")
-@SessionScoped
-public class PersonController implements Serializable {
 
-    private Person current;
+@Named("purchaseController")
+@SessionScoped
+public class PurchaseController implements Serializable {
+
+
+    private Purchase current;
     private DataModel items = null;
-    @EJB
-    private com.zople.dao.PersonFacade ejbFacade;
+    @EJB private com.zople.dao.PurchaseFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public PersonController() {
+    public PurchaseController() {
     }
 
-    public Person getSelected() {
+    public Purchase getSelected() {
         if (current == null) {
-            current = new Person();
+            current = new Purchase();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private PersonFacade getFacade() {
+    private PurchaseFacade getFacade() {
         return ejbFacade;
     }
-
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
+
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -54,7 +55,7 @@ public class PersonController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
                 }
             };
         }
@@ -67,13 +68,13 @@ public class PersonController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Person) getItems().getRowData();
+        current = (Purchase)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Person();
+        current = new Purchase();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -81,7 +82,7 @@ public class PersonController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PersonCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PurchaseCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -90,7 +91,7 @@ public class PersonController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Person) getItems().getRowData();
+        current = (Purchase)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -98,7 +99,7 @@ public class PersonController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PersonUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PurchaseUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -107,7 +108,7 @@ public class PersonController implements Serializable {
     }
 
     public String destroy() {
-        current = (Person) getItems().getRowData();
+        current = (Purchase)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -131,7 +132,7 @@ public class PersonController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PersonDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("PurchaseDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -141,14 +142,14 @@ public class PersonController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
+            selectedItemIndex = count-1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
         }
     }
 
@@ -187,25 +188,25 @@ public class PersonController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = Person.class)
-    public static class PersonControllerConverter implements Converter {
+    @FacesConverter(forClass=Purchase.class)
+    public static class PurchaseControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            PersonController controller = (PersonController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "personController");
+            PurchaseController controller = (PurchaseController)facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "purchaseController");
             return controller.ejbFacade.find(getKey(value));
         }
 
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
             return key;
         }
 
-        String getStringKey(java.lang.Long value) {
+        String getStringKey(java.lang.Integer value) {
             StringBuffer sb = new StringBuffer();
             sb.append(value);
             return sb.toString();
@@ -215,12 +216,14 @@ public class PersonController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Person) {
-                Person o = (Person) object;
+            if (object instanceof Purchase) {
+                Purchase o = (Purchase) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Person.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+Purchase.class.getName());
             }
         }
+
     }
+
 }
