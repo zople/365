@@ -20,6 +20,7 @@
             <var>msg</var>
         </resource-bundle>
         <resource-bundle>
+<<<<<<< HEAD
             <base-name>/resources/Templates</base-name>
             <var>template</var>
         </resource-bundle>
@@ -28,6 +29,8 @@
             <var>bundle</var>
         </resource-bundle>
         <resource-bundle>
+=======
+>>>>>>> a102ba32242b729bf730b7d6dcfcdd1263693cee
             <base-name>/resources/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>

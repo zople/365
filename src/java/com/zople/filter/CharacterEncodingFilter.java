@@ -4,7 +4,9 @@
  */
 package com.zople.filter;
 
+import com.zople.controller.PersonController;
 import java.io.IOException;
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,6 +20,9 @@ import javax.servlet.ServletResponse;
  */
 public class CharacterEncodingFilter implements Filter {
 
+    
+    @Inject
+    PersonController personController;
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         
