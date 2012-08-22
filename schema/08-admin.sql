@@ -13,7 +13,7 @@ create table admin_register
      description text(100),
      primary key (id)
 );
-create table admin_producetree
+create table admin_catalogue
 (
      id     int(20) not null  auto_increment,
      class_name   varchar(100),
