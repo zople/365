@@ -35,7 +35,7 @@ create table m_mymall(
 );
 //我的商贸城
 
-create table m_merchants(
+create table m_merchant(
      id        int(20) not null  auto_increment,
      name  varchar(100),
      describes  text(100),
