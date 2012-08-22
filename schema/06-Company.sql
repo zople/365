@@ -13,28 +13,28 @@ create table en_authentication(
      name  varchar(100),
      aptitude_certifications  varchar(100),
      integrity_certifications  varchar(100),
-     describes  text(100),
+     description text(100),
      primary key (id)
 )
 //企业认证
 create table en_recruitment(
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      primary key (id)
 )
 //人才招聘
 create table en_news(
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      primary key (id)
 )
 //企业新闻
 create table en_exhibition(
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      primary key (id)
 );
 //发布展会
@@ -42,7 +42,7 @@ create table en_exhibition(
 create table en_inquiry(
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      primary key (id)
 );
 //询盘
@@ -50,7 +50,7 @@ create table en_businessmen
 (
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      flg int  (10),
      primary key (id)
 );
@@ -59,7 +59,7 @@ create table en_order
 (
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      primary key (id)
 );
 //订单
@@ -67,7 +67,7 @@ create table en_storefront
 (
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      phone blob(255),
      ad       text(255),
      logo    blob(255),
@@ -79,7 +79,7 @@ create table en_premium
 (
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      user_name varchar(100),
      user_id       int (10),
      primary key (id)
@@ -92,7 +92,7 @@ create table en_user
      pwd    varchar(100),
      email    varchar(100),
      integral varchar(100),
-     describes  text(100),
+     description text(100),
      primary key (id)
 );
 //用户账户
@@ -101,7 +101,7 @@ create table en_favorite
 (
      id        int(20) not null  auto_increment,
      name  varchar(100),
-     describes  text(100),
+     description text(100),
      primary key (id)
 );
 //收藏夹
