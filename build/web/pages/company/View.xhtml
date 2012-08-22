@@ -3,12 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-<<<<<<< HEAD
-      xmlns:f="http://java.sun.com/jsf/core">
-=======
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
->>>>>>> a102ba32242b729bf730b7d6dcfcdd1263693cee
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -27,11 +23,7 @@
                     <h:outputText value="#{bundle.ViewCompanyLabel_description}"/>
                     <h:outputText value="#{companyController.selected.description}" title="#{bundle.ViewCompanyTitle_description}"/>
                     <h:outputText value="#{bundle.ViewCompanyLabel_image}"/>
-<<<<<<< HEAD
-                    <h:outputText value="#{companyController.selected.image}" title="#{bundle.ViewCompanyTitle_image}"/>
-=======
                     <p:graphicImage value="#{companyController.myImage}" />
->>>>>>> a102ba32242b729bf730b7d6dcfcdd1263693cee
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{companyController.destroyAndView}" value="#{bundle.ViewCompanyDestroyLink}"/>
