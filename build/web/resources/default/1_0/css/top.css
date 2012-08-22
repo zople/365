@@ -13,16 +13,11 @@ root {
     position: relative;
     background-color: #ff8201;
     color: white;
-<<<<<<< HEAD
 }
 #header{
     position: relative;
     background-color: #007dcd;
     color: white;
-=======
-    padding: 1px;
-    margin: 0px 0px 2px 0px;
->>>>>>> a102ba32242b729bf730b7d6dcfcdd1263693cee
 }
 body{
    color: #333;
@@ -98,8 +93,4 @@ body{
     background-origin: padding-box;
     background-clip: border-box;
     background-color: transparent;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> a102ba32242b729bf730b7d6dcfcdd1263693cee
