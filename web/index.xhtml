@@ -7,17 +7,18 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head/>
     <h:body>
-        <h:link title="365" outcome="/pages/index/main" value="365网站"></h:link>
-        <br/><br/>
-        <h:link title="企业用户平台后台管理" outcome="/pages/adminEnterprise/main" value="企业用户平台后台管理"></h:link>
+        <ui:composition template="/pages/administratorManage/template/index.xhtml">
+            <ui:define name="content">
+                <h:link title="#{template.enterpriseLink}" outcome="/pages/userManage/enterprise/back/main" value="#{template.enterpriseLink}"/>
+                <br/><br/>
+                <h:link title="#{template.mmLink}" outcome="/pages/userManage/shoppingmall/back/main" value="#{template.mmLink}"/>
+                <br/><br/>
+                <h:link title="#{template.administratorIndexback}" outcome="/pages/administratorManage/back/main" value="#{template.administratorIndexback}"/>
+                <br/><br/>
+                <h:link title="#{template.individual}" outcome="/pages/userManage/individual/back/main" value="#{template.individual}"/>
+
+            </ui:define>
+
+        </ui:composition>
     </h:body>
-
-
-
-
-
-
-
-
-
 </html>
