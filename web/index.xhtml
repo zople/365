@@ -9,16 +9,23 @@
     <h:body>
         <ui:composition template="/pages/administratorManage/template/index.xhtml">
             <ui:define name="content">
-                <h:link title="#{template.enterpriseLink}" outcome="/pages/userManage/enterprise/back/main" value="#{template.enterpriseLink}"/>
-                <br/><br/>
-                <h:link title="#{template.mmLink}" outcome="/pages/userManage/shoppingmall/back/main" value="#{template.mmLink}"/>
-                <br/><br/>
-                <h:link title="#{template.administratorIndexback}" outcome="/pages/administratorManage/back/main" value="#{template.administratorIndexback}"/>
-                <br/><br/>
-                <h:link title="#{template.individual}" outcome="/pages/userManage/individual/back/main" value="#{template.individual}"/>
-
-            </ui:define>
-
+                <table class="table">
+                    <tr><td class="newcenter"><ui:include src="/pages/administratorManage/commons/newcenter.xhtml"/></td></tr>
+                    <tr><td class="mainbox1"><ui:include src="/pages/administratorManage/commons/mainbox1.xhtml"/></td></tr>
+                    <tr><td class="adLinghuo"><ui:include src="/pages/administratorManage/commons/mainad.xhtml"/></td></tr>
+                    <tr><td class="mainboxNew"><ui:include src="/pages/administratorManage/commons/mainboxnew.xhtml"/></td></tr>
+                    <tr><td class="adLinghuo_2"><ui:include src="/pages/administratorManage/commons/mainad_2.xhtml"/></td></tr>
+                    <tr><td class="mainbox2"><ui:include src="/pages/administratorManage/commons/mainbox2.xhtml"/></td></tr>
+                    <tr><td class="adLinghuo_3"><ui:include src="/pages/administratorManage/commons/mainad_3.xhtml"/></td></tr>
+                    <tr><td class="contentbottom"><ui:include src="/pages/administratorManage/commons/contentbottom.xhtml"/></td></tr>
+                    <tr><td class="bottomlogo"><ui:include src="/pages/administratorManage/commons/bottomlogo.xhtml"/></td></tr>
+                    <tr><td class="friendlink"><ui:include src="/pages/administratorManage/commons/friendlink.xhtml"/></td></tr>
+                    <tr><td class="link"><h:link title="#{template.enterpriseLink}" outcome="/pages/userManage/enterprise/back/main" value="#{template.enterpriseLink}"/></td></tr>
+                    <tr><td class="link"><h:link title="#{template.mmLink}" outcome="/pages/userManage/shoppingmall/back/main" value="#{template.mmLink}"/></td></tr>
+                    <tr><td class="link"><h:link title="#{template.administratorIndexback}" outcome="/pages/administratorManage/back/main" value="#{template.administratorIndexback}"/></td></tr>
+                    <tr><td class="link"><h:link title="#{template.individual}" outcome="/pages/userManage/individual/back/main" value="#{template.individual}"/></td></tr>
+                </table>
+               </ui:define>
         </ui:composition>
     </h:body>
 </html>
