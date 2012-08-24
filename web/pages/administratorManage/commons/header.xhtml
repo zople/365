@@ -1,7 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html">
-        <div class="Nav">
+    <h:head/>
+        <!--<div class="Nav">
             <div class="NavL"></div>
             <div class="Navc">
                 <a href="/365" value="#{template.administratorHeader1}">首页</a>
@@ -18,4 +19,24 @@
                 <a href="#"  >#{template.administratorHeader12}</a>
         </div>
         </div>
+      -->
+      <table class="table">
+           <tr>
+               <td colspan="12"><ui:include src="logo.xhtml"/></td>
+           </tr>
+           <tr>
+               <td>#{template.administratorHeader1}</td>
+               <td>#{template.administratorHeader2}</td>
+               <td>#{template.administratorHeader3}</td>
+               <td>#{template.administratorHeader4}</td>
+               <td>#{template.administratorHeader5}</td>
+               <td>#{template.administratorHeader6}</td>
+               <td>#{template.administratorHeader7}</td>
+               <td>#{template.administratorHeader8}</td>
+               <td>#{template.administratorHeader9}</td>
+               <td>#{template.administratorHeader10}</td>
+               <td>#{template.administratorHeader11}</td>
+               <td>#{template.administratorHeader12}</td>
+           </tr>
+       </table>
     </html>
