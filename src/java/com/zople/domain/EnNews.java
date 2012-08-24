@@ -5,16 +5,12 @@
 package com.zople.domain;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,36 +21,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Administrator
  */
 @Entity
-@Table(name = "company")
+@Table(name = "en_news")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c"),
-    @NamedQuery(name = "Company.findById", query = "SELECT c FROM Company c WHERE c.id = :id"),
-    @NamedQuery(name = "Company.findByDescription", query = "SELECT c FROM Company c WHERE c.description = :description"),
-    @NamedQuery(name = "Company.findByImage", query = "SELECT c FROM Company c WHERE c.image = :image"),
-    @NamedQuery(name = "Company.findByName", query = "SELECT c FROM Company c WHERE c.name = :name")})
-public class Company implements Serializable {
+    @NamedQuery(name = "EnNews.findAll", query = "SELECT e FROM EnNews e"),
+    @NamedQuery(name = "EnNews.findById", query = "SELECT e FROM EnNews e WHERE e.id = :id"),
+    @NamedQuery(name = "EnNews.findByName", query = "SELECT e FROM EnNews e WHERE e.name = :name"),
+    @NamedQuery(name = "EnNews.findByDescription", query = "SELECT e FROM EnNews e WHERE e.description = :description")})
+public class EnNews implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="company_seq",sequenceName="company_seq")
-    @GeneratedValue(strategy = GenerationType. SEQUENCE,generator="company_seq")
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Long id;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    @Column(name = "image")
-    private BigInteger image;
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "name")
     private String name;
+    @Size(max = 2147483647)
+    @Column(name = "description")
+    private String description;
 
-    public Company() {
+    public EnNews() {
     }
 
-    public Company(Long id) {
+    public EnNews(Long id) {
         this.id = id;
     }
 
@@ -66,28 +57,20 @@ public class Company implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigInteger getImage() {
-        return image;
-    }
-
-    public void setImage(BigInteger image) {
-        this.image = image;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -100,10 +83,10 @@ public class Company implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Company)) {
+        if (!(object instanceof EnNews)) {
             return false;
         }
-        Company other = (Company) object;
+        EnNews other = (EnNews) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -112,7 +95,7 @@ public class Company implements Serializable {
 
     @Override
     public String toString() {
-        return "com.zople.domain.Company[ id=" + id + " ]";
+        return "com.zople.domain.EnNews[ id=" + id + " ]";
     }
     
 }

@@ -1,9 +1,9 @@
 package com.zople.controller;
 
-import com.zople.domain.Company;
+import com.zople.domain.AdminRegister;
 import com.zople.controller.util.JsfUtil;
 import com.zople.controller.util.PaginationHelper;
-import com.zople.dao.CompanyFacade;
+import com.zople.dao.AdminRegisterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -19,29 +19,29 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 
-@Named("companyController")
+@Named("adminRegisterController")
 @SessionScoped
-public class CompanyController implements Serializable {
+public class AdminRegisterController implements Serializable {
 
 
-    private Company current;
+    private AdminRegister current;
     private DataModel items = null;
-    @EJB private com.zople.dao.CompanyFacade ejbFacade;
+    @EJB private com.zople.dao.AdminRegisterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public CompanyController() {
+    public AdminRegisterController() {
     }
 
-    public Company getSelected() {
+    public AdminRegister getSelected() {
         if (current == null) {
-            current = new Company();
+            current = new AdminRegister();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private CompanyFacade getFacade() {
+    private AdminRegisterFacade getFacade() {
         return ejbFacade;
     }
     public PaginationHelper getPagination() {
@@ -68,13 +68,13 @@ public class CompanyController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Company)getItems().getRowData();
+        current = (AdminRegister)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Company();
+        current = new AdminRegister();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class CompanyController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AdminRegisterCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class CompanyController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Company)getItems().getRowData();
+        current = (AdminRegister)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class CompanyController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AdminRegisterUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class CompanyController implements Serializable {
     }
 
     public String destroy() {
-        current = (Company)getItems().getRowData();
+        current = (AdminRegister)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class CompanyController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AdminRegisterDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,15 +188,15 @@ public class CompanyController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass=Company.class)
-    public static class CompanyControllerConverter implements Converter {
+    @FacesConverter(forClass=AdminRegister.class)
+    public static class AdminRegisterControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CompanyController controller = (CompanyController)facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "companyController");
+            AdminRegisterController controller = (AdminRegisterController)facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "adminRegisterController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -216,11 +216,11 @@ public class CompanyController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Company) {
-                Company o = (Company) object;
+            if (object instanceof AdminRegister) {
+                AdminRegister o = (AdminRegister) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+Company.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+AdminRegister.class.getName());
             }
         }
 

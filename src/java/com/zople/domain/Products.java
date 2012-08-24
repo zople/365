@@ -5,7 +5,7 @@
 package com.zople.domain;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -33,34 +33,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Products.findAll", query = "SELECT p FROM Products p"),
     @NamedQuery(name = "Products.findByProductNo", query = "SELECT p FROM Products p WHERE p.productNo = :productNo"),
-    @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name"),
-    @NamedQuery(name = "Products.findByPrice", query = "SELECT p FROM Products p WHERE p.price = :price"),
     @NamedQuery(name = "Products.findByAddress", query = "SELECT p FROM Products p WHERE p.address = :address"),
+    @NamedQuery(name = "Products.findByCreateTime", query = "SELECT p FROM Products p WHERE p.createTime = :createTime"),
     @NamedQuery(name = "Products.findByDescribe", query = "SELECT p FROM Products p WHERE p.describe = :describe"),
-    @NamedQuery(name = "Products.findByCreateTime", query = "SELECT p FROM Products p WHERE p.createTime = :createTime")})
+    @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name"),
+    @NamedQuery(name = "Products.findByPrice", query = "SELECT p FROM Products p WHERE p.price = :price")})
 public class Products implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="products_seq",sequenceName="products_seq")
-    @GeneratedValue(strategy = GenerationType. SEQUENCE,generator="products_seq")
+    @SequenceGenerator(name="products",sequenceName="products")
+    @GeneratedValue(strategy = GenerationType. SEQUENCE,generator="products")
     @Basic(optional = false)
     @NotNull
     @Column(name = "product_no")
     private Integer productNo;
-    @Size(max = 2147483647)
-    @Column(name = "name")
-    private String name;
-    @Column(name = "price")
-    private BigInteger price;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "address")
     private String address;
-    @Size(max = 2147483647)
-    @Column(name = "describe")
-    private String describe;
     @Column(name = "create_time")
     @Temporal(TemporalType.DATE)
     private Date createTime;
+    @Size(max = 255)
+    @Column(name = "describe")
+    private String describe;
+    @Size(max = 255)
+    @Column(name = "name")
+    private String name;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "price")
+    private BigDecimal price;
 
     public Products() {
     }
@@ -77,28 +78,20 @@ public class Products implements Serializable {
         this.productNo = productNo;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigInteger getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigInteger price) {
-        this.price = price;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public String getDescribe() {
@@ -109,12 +102,20 @@ public class Products implements Serializable {
         this.describe = describe;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getName() {
+        return name;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.zople.controller;
 
-import com.zople.domain.Company;
+import com.zople.domain.MRecruitment;
 import com.zople.controller.util.JsfUtil;
 import com.zople.controller.util.PaginationHelper;
-import com.zople.dao.CompanyFacade;
+import com.zople.dao.MRecruitmentFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,36 +18,35 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-
-@Named("companyController")
+@Named("mRecruitmentController")
 @SessionScoped
-public class CompanyController implements Serializable {
+public class MRecruitmentController implements Serializable {
 
-
-    private Company current;
+    private MRecruitment current;
     private DataModel items = null;
-    @EJB private com.zople.dao.CompanyFacade ejbFacade;
+    @EJB
+    private com.zople.dao.MRecruitmentFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public CompanyController() {
+    public MRecruitmentController() {
     }
 
-    public Company getSelected() {
+    public MRecruitment getSelected() {
         if (current == null) {
-            current = new Company();
+            current = new MRecruitment();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private CompanyFacade getFacade() {
+    private MRecruitmentFacade getFacade() {
         return ejbFacade;
     }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -55,7 +54,7 @@ public class CompanyController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -68,13 +67,13 @@ public class CompanyController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Company)getItems().getRowData();
+        current = (MRecruitment) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Company();
+        current = new MRecruitment();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,16 +81,16 @@ public class CompanyController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("MRecruitmentCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String prepareEdit() {
-        current = (Company)getItems().getRowData();
+        current = (MRecruitment) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,16 +98,16 @@ public class CompanyController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("MRecruitmentUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String destroy() {
-        current = (Company)getItems().getRowData();
+        current = (MRecruitment) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,9 +131,9 @@ public class CompanyController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("MRecruitmentDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -142,14 +141,14 @@ public class CompanyController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count-1;
+            selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -188,15 +187,15 @@ public class CompanyController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass=Company.class)
-    public static class CompanyControllerConverter implements Converter {
+    @FacesConverter(forClass = MRecruitment.class)
+    public static class MRecruitmentControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CompanyController controller = (CompanyController)facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "companyController");
+            MRecruitmentController controller = (MRecruitmentController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "mRecruitmentController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -216,14 +215,12 @@ public class CompanyController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Company) {
-                Company o = (Company) object;
+            if (object instanceof MRecruitment) {
+                MRecruitment o = (MRecruitment) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+Company.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + MRecruitment.class.getName());
             }
         }
-
     }
-
 }

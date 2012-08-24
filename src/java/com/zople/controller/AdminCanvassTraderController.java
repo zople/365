@@ -1,9 +1,9 @@
 package com.zople.controller;
 
-import com.zople.domain.Company;
+import com.zople.domain.AdminCanvassTrader;
 import com.zople.controller.util.JsfUtil;
 import com.zople.controller.util.PaginationHelper;
-import com.zople.dao.CompanyFacade;
+import com.zople.dao.AdminCanvassTraderFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -19,29 +19,29 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 
-@Named("companyController")
+@Named("adminCanvassTraderController")
 @SessionScoped
-public class CompanyController implements Serializable {
+public class AdminCanvassTraderController implements Serializable {
 
 
-    private Company current;
+    private AdminCanvassTrader current;
     private DataModel items = null;
-    @EJB private com.zople.dao.CompanyFacade ejbFacade;
+    @EJB private com.zople.dao.AdminCanvassTraderFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public CompanyController() {
+    public AdminCanvassTraderController() {
     }
 
-    public Company getSelected() {
+    public AdminCanvassTrader getSelected() {
         if (current == null) {
-            current = new Company();
+            current = new AdminCanvassTrader();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private CompanyFacade getFacade() {
+    private AdminCanvassTraderFacade getFacade() {
         return ejbFacade;
     }
     public PaginationHelper getPagination() {
@@ -68,13 +68,13 @@ public class CompanyController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Company)getItems().getRowData();
+        current = (AdminCanvassTrader)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Company();
+        current = new AdminCanvassTrader();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class CompanyController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AdminCanvassTraderCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class CompanyController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Company)getItems().getRowData();
+        current = (AdminCanvassTrader)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class CompanyController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AdminCanvassTraderUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class CompanyController implements Serializable {
     }
 
     public String destroy() {
-        current = (Company)getItems().getRowData();
+        current = (AdminCanvassTrader)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class CompanyController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AdminCanvassTraderDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,15 +188,15 @@ public class CompanyController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass=Company.class)
-    public static class CompanyControllerConverter implements Converter {
+    @FacesConverter(forClass=AdminCanvassTrader.class)
+    public static class AdminCanvassTraderControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CompanyController controller = (CompanyController)facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "companyController");
+            AdminCanvassTraderController controller = (AdminCanvassTraderController)facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "adminCanvassTraderController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -216,11 +216,11 @@ public class CompanyController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Company) {
-                Company o = (Company) object;
+            if (object instanceof AdminCanvassTrader) {
+                AdminCanvassTrader o = (AdminCanvassTrader) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+Company.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+AdminCanvassTrader.class.getName());
             }
         }
 

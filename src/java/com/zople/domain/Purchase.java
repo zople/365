@@ -18,6 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,24 +32,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Purchase.findAll", query = "SELECT p FROM Purchase p"),
     @NamedQuery(name = "Purchase.findById", query = "SELECT p FROM Purchase p WHERE p.id = :id"),
-    @NamedQuery(name = "Purchase.findByName", query = "SELECT p FROM Purchase p WHERE p.name = :name"),
+    @NamedQuery(name = "Purchase.findByCreateTime", query = "SELECT p FROM Purchase p WHERE p.createTime = :createTime"),
     @NamedQuery(name = "Purchase.findByDescribe", query = "SELECT p FROM Purchase p WHERE p.describe = :describe"),
-    @NamedQuery(name = "Purchase.findByCreateTime", query = "SELECT p FROM Purchase p WHERE p.createTime = :createTime")})
+    @NamedQuery(name = "Purchase.findByName", query = "SELECT p FROM Purchase p WHERE p.name = :name")})
 public class Purchase implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="purchase_seq",sequenceName="purchase_seq")
-    @GeneratedValue(strategy = GenerationType. SEQUENCE,generator="purchase_seq")
+    @SequenceGenerator(name="purchase",sequenceName="purchase")
+    @GeneratedValue(strategy = GenerationType. SEQUENCE,generator="purchase")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id")
     private Integer id;
-    @Size(max = 2147483647)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 2147483647)
-    @Column(name = "describe")
-    private String describe;
     @Column(name = "create_time")
     @Temporal(TemporalType.DATE)
     private Date createTime;
+    @Size(max = 255)
+    @Column(name = "describe")
+    private String describe;
+    @Size(max = 255)
+    @Column(name = "name")
+    private String name;
 
     public Purchase() {
     }
@@ -65,12 +69,12 @@ public class Purchase implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public String getDescribe() {
@@ -81,12 +85,12 @@ public class Purchase implements Serializable {
         this.describe = describe;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getName() {
+        return name;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

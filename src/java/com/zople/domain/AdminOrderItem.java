@@ -9,12 +9,9 @@ import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,36 +22,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Administrator
  */
 @Entity
-@Table(name = "company")
+@Table(name = "admin_order_item")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c"),
-    @NamedQuery(name = "Company.findById", query = "SELECT c FROM Company c WHERE c.id = :id"),
-    @NamedQuery(name = "Company.findByDescription", query = "SELECT c FROM Company c WHERE c.description = :description"),
-    @NamedQuery(name = "Company.findByImage", query = "SELECT c FROM Company c WHERE c.image = :image"),
-    @NamedQuery(name = "Company.findByName", query = "SELECT c FROM Company c WHERE c.name = :name")})
-public class Company implements Serializable {
+    @NamedQuery(name = "AdminOrderItem.findAll", query = "SELECT a FROM AdminOrderItem a"),
+    @NamedQuery(name = "AdminOrderItem.findById", query = "SELECT a FROM AdminOrderItem a WHERE a.id = :id"),
+    @NamedQuery(name = "AdminOrderItem.findByOrderId", query = "SELECT a FROM AdminOrderItem a WHERE a.orderId = :orderId"),
+    @NamedQuery(name = "AdminOrderItem.findByName", query = "SELECT a FROM AdminOrderItem a WHERE a.name = :name"),
+    @NamedQuery(name = "AdminOrderItem.findByDescription", query = "SELECT a FROM AdminOrderItem a WHERE a.description = :description")})
+public class AdminOrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="company_seq",sequenceName="company_seq")
-    @GeneratedValue(strategy = GenerationType. SEQUENCE,generator="company_seq")
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Long id;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    @Column(name = "image")
-    private BigInteger image;
-    @Size(max = 255)
+    @Column(name = "order_id")
+    private BigInteger orderId;
+    @Size(max = 100)
     @Column(name = "name")
     private String name;
+    @Size(max = 2147483647)
+    @Column(name = "description")
+    private String description;
 
-    public Company() {
+    public AdminOrderItem() {
     }
 
-    public Company(Long id) {
+    public AdminOrderItem(Long id) {
         this.id = id;
     }
 
@@ -66,20 +61,12 @@ public class Company implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public BigInteger getOrderId() {
+        return orderId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigInteger getImage() {
-        return image;
-    }
-
-    public void setImage(BigInteger image) {
-        this.image = image;
+    public void setOrderId(BigInteger orderId) {
+        this.orderId = orderId;
     }
 
     public String getName() {
@@ -88,6 +75,14 @@ public class Company implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -100,10 +95,10 @@ public class Company implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Company)) {
+        if (!(object instanceof AdminOrderItem)) {
             return false;
         }
-        Company other = (Company) object;
+        AdminOrderItem other = (AdminOrderItem) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -112,7 +107,7 @@ public class Company implements Serializable {
 
     @Override
     public String toString() {
-        return "com.zople.domain.Company[ id=" + id + " ]";
+        return "com.zople.domain.AdminOrderItem[ id=" + id + " ]";
     }
     
 }

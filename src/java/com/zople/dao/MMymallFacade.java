@@ -4,7 +4,7 @@
  */
 package com.zople.dao;
 
-import com.zople.domain.Company;
+import com.zople.domain.MMymall;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author Administrator
  */
 @Stateless
-public class CompanyFacade extends AbstractFacade<Company> {
+public class MMymallFacade extends AbstractFacade<MMymall> {
     @PersistenceContext(unitName = "365PU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class CompanyFacade extends AbstractFacade<Company> {
         return em;
     }
 
-    public CompanyFacade() {
-        super(Company.class);
+    public MMymallFacade() {
+        super(MMymall.class);
     }
     
 }

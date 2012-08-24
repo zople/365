@@ -9,12 +9,9 @@ import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,36 +22,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Administrator
  */
 @Entity
-@Table(name = "company")
+@Table(name = "en_businessmen")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c"),
-    @NamedQuery(name = "Company.findById", query = "SELECT c FROM Company c WHERE c.id = :id"),
-    @NamedQuery(name = "Company.findByDescription", query = "SELECT c FROM Company c WHERE c.description = :description"),
-    @NamedQuery(name = "Company.findByImage", query = "SELECT c FROM Company c WHERE c.image = :image"),
-    @NamedQuery(name = "Company.findByName", query = "SELECT c FROM Company c WHERE c.name = :name")})
-public class Company implements Serializable {
+    @NamedQuery(name = "EnBusinessmen.findAll", query = "SELECT e FROM EnBusinessmen e"),
+    @NamedQuery(name = "EnBusinessmen.findById", query = "SELECT e FROM EnBusinessmen e WHERE e.id = :id"),
+    @NamedQuery(name = "EnBusinessmen.findByName", query = "SELECT e FROM EnBusinessmen e WHERE e.name = :name"),
+    @NamedQuery(name = "EnBusinessmen.findByDescription", query = "SELECT e FROM EnBusinessmen e WHERE e.description = :description"),
+    @NamedQuery(name = "EnBusinessmen.findByFlg", query = "SELECT e FROM EnBusinessmen e WHERE e.flg = :flg")})
+public class EnBusinessmen implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="company_seq",sequenceName="company_seq")
-    @GeneratedValue(strategy = GenerationType. SEQUENCE,generator="company_seq")
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Long id;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    @Column(name = "image")
-    private BigInteger image;
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "name")
     private String name;
+    @Size(max = 2147483647)
+    @Column(name = "description")
+    private String description;
+    @Column(name = "flg")
+    private BigInteger flg;
 
-    public Company() {
+    public EnBusinessmen() {
     }
 
-    public Company(Long id) {
+    public EnBusinessmen(Long id) {
         this.id = id;
     }
 
@@ -66,6 +61,14 @@ public class Company implements Serializable {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -74,20 +77,12 @@ public class Company implements Serializable {
         this.description = description;
     }
 
-    public BigInteger getImage() {
-        return image;
+    public BigInteger getFlg() {
+        return flg;
     }
 
-    public void setImage(BigInteger image) {
-        this.image = image;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setFlg(BigInteger flg) {
+        this.flg = flg;
     }
 
     @Override
@@ -100,10 +95,10 @@ public class Company implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Company)) {
+        if (!(object instanceof EnBusinessmen)) {
             return false;
         }
-        Company other = (Company) object;
+        EnBusinessmen other = (EnBusinessmen) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -112,7 +107,7 @@ public class Company implements Serializable {
 
     @Override
     public String toString() {
-        return "com.zople.domain.Company[ id=" + id + " ]";
+        return "com.zople.domain.EnBusinessmen[ id=" + id + " ]";
     }
     
 }

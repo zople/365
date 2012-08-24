@@ -1,9 +1,9 @@
 package com.zople.controller;
 
-import com.zople.domain.Company;
+import com.zople.domain.MMymall;
 import com.zople.controller.util.JsfUtil;
 import com.zople.controller.util.PaginationHelper;
-import com.zople.dao.CompanyFacade;
+import com.zople.dao.MMymallFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,36 +18,35 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-
-@Named("companyController")
+@Named("mMymallController")
 @SessionScoped
-public class CompanyController implements Serializable {
+public class MMymallController implements Serializable {
 
-
-    private Company current;
+    private MMymall current;
     private DataModel items = null;
-    @EJB private com.zople.dao.CompanyFacade ejbFacade;
+    @EJB
+    private com.zople.dao.MMymallFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public CompanyController() {
+    public MMymallController() {
     }
 
-    public Company getSelected() {
+    public MMymall getSelected() {
         if (current == null) {
-            current = new Company();
+            current = new MMymall();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private CompanyFacade getFacade() {
+    private MMymallFacade getFacade() {
         return ejbFacade;
     }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -55,7 +54,7 @@ public class CompanyController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -68,13 +67,13 @@ public class CompanyController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Company)getItems().getRowData();
+        current = (MMymall) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Company();
+        current = new MMymall();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,16 +81,16 @@ public class CompanyController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("MMymallCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String prepareEdit() {
-        current = (Company)getItems().getRowData();
+        current = (MMymall) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,16 +98,16 @@ public class CompanyController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("MMymallUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String destroy() {
-        current = (Company)getItems().getRowData();
+        current = (MMymall) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,9 +131,9 @@ public class CompanyController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("CompanyDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("MMymallDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/shoppingmall/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -142,14 +141,14 @@ public class CompanyController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count-1;
+            selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -188,15 +187,15 @@ public class CompanyController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass=Company.class)
-    public static class CompanyControllerConverter implements Converter {
+    @FacesConverter(forClass = MMymall.class)
+    public static class MMymallControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CompanyController controller = (CompanyController)facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "companyController");
+            MMymallController controller = (MMymallController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "mMymallController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -216,14 +215,12 @@ public class CompanyController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Company) {
-                Company o = (Company) object;
+            if (object instanceof MMymall) {
+                MMymall o = (MMymall) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+Company.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + MMymall.class.getName());
             }
         }
-
     }
-
 }
